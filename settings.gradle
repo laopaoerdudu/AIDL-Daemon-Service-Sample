@@ -1,0 +1,2 @@
+rootProject.name = "AIDL-Daemon-Service-Sample"
+include ':app'
