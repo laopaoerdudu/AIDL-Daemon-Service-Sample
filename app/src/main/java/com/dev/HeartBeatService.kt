@@ -2,6 +2,7 @@ package com.dev
 
 import android.app.Service
 import android.content.ComponentName
+import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.os.RemoteException
@@ -16,13 +17,11 @@ abstract class HeartBeatService : Service() {
         }
     }
 
-    private val binder = object : ServiceManager.Stub() {
+    private val aidl = object : ServiceManager.Stub() {
         override fun startService() {
-            // TODO
         }
 
         override fun stopService() {
-            // TODO
         }
     }
 
@@ -30,7 +29,7 @@ abstract class HeartBeatService : Service() {
         override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
             try {
                 iBinder?.linkToDeath({
-                    binder.startService()
+                    aidl.startService()
                     startBindService()
                 }, 1)
             } catch (ex: RemoteException) {
@@ -41,7 +40,7 @@ abstract class HeartBeatService : Service() {
 
         override fun onServiceDisconnected(p0: ComponentName?) {
             try {
-                binder.stopService()
+                aidl.stopService()
             } catch (ex: RemoteException) {
                 ex.printStackTrace()
             }
@@ -52,10 +51,50 @@ abstract class HeartBeatService : Service() {
         }
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        onStartService()
+        startBindService()
+        if (getHeartBeatMillis() > 0) {
+            timer.schedule(timerTask, getDelayExecutedMillis(), getHeartBeatMillis())
+        }
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        return START_STICKY
+    }
+
+    override fun onBind(p0: Intent?): IBinder? {
+        return aidl
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        onStopService()
+        unbindService(serviceConnection)
+
+        // TODO: DaemonHolder.restartService(getApplicationContext(), DaemonHolder.mService)
+
+        timer.apply {
+            cancel()
+            purge()
+        }
+        timerTask.cancel()
+    }
+
+    abstract fun onStartService()
+
+    abstract fun onStopService()
+
+    abstract fun getDelayExecutedMillis(): Long
+
+    abstract fun getHeartBeatMillis(): Long
+
     abstract fun onHeartBeat()
 
     private fun startBindService() {
-        //startService(Intent(this, /**DaemonService.class**/))
-
+        val intent = Intent(this, DaemonService::class.java)
+        startService(intent)
+        bindService(intent, serviceConnection, BIND_IMPORTANT)
     }
 }
