@@ -33,7 +33,7 @@ object DaemonHelper {
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !DaemonUtil.isXiaomi()) {
-               JobSchedulerService().scheduleJobService(context)
+                JobSchedulerService().scheduleJobService(context)
             }
 
             context.packageManager.setComponentEnabledSetting(
