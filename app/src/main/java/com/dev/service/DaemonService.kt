@@ -13,6 +13,7 @@ import android.os.IBinder
 import android.os.RemoteException
 import com.dev.receive.ScreenBroadcastReceiver
 import com.dev.ServiceManager
+import com.dev.helper.DaemonHelper
 
 class DaemonService : Service() {
     private val screenBroadcastReceiver = ScreenBroadcastReceiver()
@@ -69,9 +70,7 @@ class DaemonService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         unbindService(serviceConnection)
-
-        // TODO: DaemonHolder.restartService(getApplicationContext(), getClass());
-
+        DaemonHelper.restartService(applicationContext, this.javaClass)
         screenBroadcastReceiver.unregisterReceiver(this)
     }
 
@@ -82,17 +81,17 @@ class DaemonService : Service() {
                 object : ConnectivityManager.NetworkCallback() {
                     override fun onAvailable(network: Network) {
                         super.onAvailable(network)
-                        // TODO: DaemonHolder.startService()
+                        DaemonHelper.startService()
                     }
 
                     override fun onUnavailable() {
                         super.onUnavailable()
-                        // TODO:  DaemonHolder.startService();
+                        DaemonHelper.startService()
                     }
 
                     override fun onLost(network: Network) {
                         super.onLost(network)
-                        // TODO: DaemonHolder.startService();
+                        DaemonHelper.startService()
                     }
                 }
             )
@@ -100,9 +99,9 @@ class DaemonService : Service() {
     }
 
     private fun startBindService() {
-        // TODO: if (DaemonHolder.mService != null) {
-        //                startService(new Intent(this, DaemonHolder.mService));
-        //                bindService(new Intent(this, DaemonHolder.mService), serviceConnection, Context.BIND_IMPORTANT);
-        //            }
+        DaemonHelper.mService?.let { service ->
+            startService(Intent(this, service))
+            bindService(Intent(this, service), serviceConnection, Context.BIND_IMPORTANT)
+        }
     }
 }
