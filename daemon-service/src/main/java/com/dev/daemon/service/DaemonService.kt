@@ -11,6 +11,7 @@ import android.net.NetworkRequest
 import android.os.Build
 import android.os.IBinder
 import android.os.RemoteException
+import android.util.Log
 import com.dev.daemon.receive.ScreenBroadcastReceiver
 import com.dev.daemon.ServiceManager
 import com.dev.daemon.helper.DaemonHelper
@@ -20,9 +21,11 @@ class DaemonService : Service() {
 
     private val aidl = object : ServiceManager.Stub() {
         override fun startService() {
+            Log.i("WWE", "DaemonService -> AIDL -> #startService >>>")
         }
 
         override fun stopService() {
+            Log.i("WWE", "DaemonService -> AIDL -> #stopService >>>")
         }
     }
 

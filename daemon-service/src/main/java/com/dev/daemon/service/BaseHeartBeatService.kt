@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.os.RemoteException
+import android.util.Log
 import com.dev.daemon.ServiceManager
 import com.dev.daemon.helper.DaemonHelper
 import java.util.*
@@ -21,9 +22,11 @@ abstract class BaseHeartBeatService : Service() {
 
     private val aidl = object : ServiceManager.Stub() {
         override fun startService() {
+            Log.i("WWE", "BaseHeartBeatService -> AIDL -> #startService >>>")
         }
 
         override fun stopService() {
+            Log.i("WWE", "BaseHeartBeatService -> AIDL -> #stopService >>>")
         }
     }
 

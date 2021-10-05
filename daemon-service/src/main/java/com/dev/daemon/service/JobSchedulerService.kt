@@ -22,7 +22,7 @@ class JobSchedulerService : JobService() {
         return false
     }
 
-    fun scheduleJobService(context: Context) {
+    fun schedule(context: Context) {
         var isSuccess = false
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val builder =
@@ -46,9 +46,9 @@ class JobSchedulerService : JobService() {
             }
         }
         if (isSuccess) {
-            Log.i("WWE", "JobSchedulerService Scheduler Success!")
+            Log.i("WWE", "JobSchedulerService #scheduler Success!")
         } else {
-            Log.i("WWE", "JobSchedulerService Scheduler Failed!")
+            Log.i("WWE", "JobSchedulerService #scheduler Failed!")
         }
     }
 }

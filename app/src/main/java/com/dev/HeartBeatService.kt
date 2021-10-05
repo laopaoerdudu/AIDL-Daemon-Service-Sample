@@ -1,13 +1,16 @@
 package com.dev
 
+import android.util.Log
 import com.dev.daemon.service.BaseHeartBeatService
 
 class HeartBeatService : BaseHeartBeatService() {
 
     override fun onStartService() {
+        Log.i("WWE", "HeartBeatService #onStartService >>>")
     }
 
     override fun onStopService() {
+        Log.i("WWE", "HeartBeatService #onStopService >>>")
     }
 
     override fun getDelayExecutedMillis(): Long {
@@ -19,5 +22,6 @@ class HeartBeatService : BaseHeartBeatService() {
     }
 
     override fun onHeartBeat() {
+        Log.i("WWE", "HeartBeatService #onHeartBeat >>>")
     }
 }
