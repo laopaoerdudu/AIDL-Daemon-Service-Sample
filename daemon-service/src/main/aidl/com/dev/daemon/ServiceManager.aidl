@@ -1,5 +1,5 @@
 // ServiceManager.aidl
-package com.dev;
+package com.dev.daemon;
 
 interface ServiceManager {
     void startService();

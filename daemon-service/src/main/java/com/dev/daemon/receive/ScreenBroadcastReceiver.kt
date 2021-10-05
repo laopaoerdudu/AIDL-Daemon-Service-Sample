@@ -1,16 +1,15 @@
-package com.dev.receive
+package com.dev.daemon.receive
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import com.dev.helper.DaemonHelper
 
 class ScreenBroadcastReceiver : BroadcastReceiver() {
     private var isRegistered = false
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        DaemonHelper.startService()
+        com.dev.daemon.helper.DaemonHelper.startService()
     }
 
     fun registerReceiver(context: Context) {

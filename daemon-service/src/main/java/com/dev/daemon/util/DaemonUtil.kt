@@ -1,4 +1,4 @@
-package com.dev.util
+package com.dev.daemon.util
 
 import android.app.ActivityManager
 import android.content.Context

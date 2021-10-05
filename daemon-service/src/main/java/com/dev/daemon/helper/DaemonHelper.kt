@@ -1,4 +1,4 @@
-package com.dev.helper
+package com.dev.daemon.helper
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
@@ -10,10 +10,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.SystemClock
-import com.dev.service.HeartBeatService
-import com.dev.service.JobSchedulerService
-import com.dev.util.DaemonUtil
-import com.dev.util.safeLeft
+import com.dev.daemon.service.HeartBeatService
+import com.dev.daemon.service.JobSchedulerService
+import com.dev.daemon.util.DaemonUtil
+import com.dev.daemon.util.safeLeft
 
 object DaemonHelper {
     var mContext: Context? = null

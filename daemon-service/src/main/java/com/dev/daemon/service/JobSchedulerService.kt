@@ -1,4 +1,4 @@
-package com.dev.service
+package com.dev.daemon.service
 
 import android.app.job.JobInfo
 import android.app.job.JobParameters
@@ -8,8 +8,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.Build
 import android.util.Log
-import com.dev.helper.DaemonHelper
-import com.dev.util.DaemonUtil
+import com.dev.daemon.helper.DaemonHelper
+import com.dev.daemon.util.DaemonUtil
 
 class JobSchedulerService : JobService() {
     override fun onStartJob(params: JobParameters?): Boolean {

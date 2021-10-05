@@ -1,4 +1,4 @@
-package com.dev.service
+package com.dev.daemon.service
 
 import android.app.Service
 import android.content.ComponentName
@@ -11,9 +11,9 @@ import android.net.NetworkRequest
 import android.os.Build
 import android.os.IBinder
 import android.os.RemoteException
-import com.dev.receive.ScreenBroadcastReceiver
-import com.dev.ServiceManager
-import com.dev.helper.DaemonHelper
+import com.dev.daemon.receive.ScreenBroadcastReceiver
+import com.dev.daemon.ServiceManager
+import com.dev.daemon.helper.DaemonHelper
 
 class DaemonService : Service() {
     private val screenBroadcastReceiver = ScreenBroadcastReceiver()
