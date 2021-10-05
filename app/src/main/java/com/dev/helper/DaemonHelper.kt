@@ -11,12 +11,13 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.SystemClock
 import com.dev.service.HeartBeatService
+import com.dev.service.JobSchedulerService
 import com.dev.util.DaemonUtil
 import com.dev.util.safeLeft
 
 object DaemonHelper {
-    private var mContext: Context? = null
-    private var mService: Class<out Service?>? = null
+    var mContext: Context? = null
+    var mService: Class<out Service?>? = null
 
     fun setup(context: Context, service: Class<out HeartBeatService>) {
         mContext = context
@@ -32,7 +33,7 @@ object DaemonHelper {
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !DaemonUtil.isXiaomi()) {
-                // TODO: JobSchedulerService.scheduleJobService(DaemonHolder.mContext)
+               JobSchedulerService().scheduleJobService(context)
             }
 
             context.packageManager.setComponentEnabledSetting(
@@ -51,8 +52,8 @@ object DaemonHelper {
         }
     }
 
-    fun restartService(context: Context, cls: Class<*>) {
-        val pendingIntent = PendingIntent.getService(context, 1, Intent(context, cls).apply {
+    fun restartService(context: Context, service: Class<out Service?>) {
+        val pendingIntent = PendingIntent.getService(context, 1, Intent(context, service).apply {
             `package` = context.packageName
         }, PendingIntent.FLAG_ONE_SHOT)
         (context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager)?.set(

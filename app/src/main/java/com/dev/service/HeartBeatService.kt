@@ -7,6 +7,7 @@ import android.content.ServiceConnection
 import android.os.IBinder
 import android.os.RemoteException
 import com.dev.ServiceManager
+import com.dev.helper.DaemonHelper
 import java.util.*
 
 abstract class HeartBeatService : Service() {
@@ -73,9 +74,9 @@ abstract class HeartBeatService : Service() {
         super.onDestroy()
         onStopService()
         unbindService(serviceConnection)
-
-        // TODO: DaemonHolder.restartService(getApplicationContext(), DaemonHolder.mService)
-
+        DaemonHelper.mService?.let {
+            DaemonHelper.restartService(applicationContext, it)
+        }
         timer.apply {
             cancel()
             purge()
@@ -94,8 +95,9 @@ abstract class HeartBeatService : Service() {
     abstract fun onHeartBeat()
 
     private fun startBindService() {
-        val intent = Intent(this, DaemonService::class.java)
-        startService(intent)
-        bindService(intent, serviceConnection, BIND_IMPORTANT)
+        with(Intent(this, DaemonService::class.java)) {
+            startService(this)
+            bindService(this, serviceConnection, BIND_IMPORTANT)
+        }
     }
 }
