@@ -10,7 +10,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.SystemClock
-import com.dev.daemon.service.HeartBeatService
+import com.dev.daemon.service.BaseHeartBeatService
 import com.dev.daemon.service.JobSchedulerService
 import com.dev.daemon.util.DaemonUtil
 import com.dev.daemon.util.safeLeft
@@ -19,7 +19,7 @@ object DaemonHelper {
     var mContext: Context? = null
     var mService: Class<out Service?>? = null
 
-    fun setup(context: Context, service: Class<out HeartBeatService>) {
+    fun setup(context: Context, service: Class<out BaseHeartBeatService>) {
         mContext = context
         mService = service
         startService()

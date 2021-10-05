@@ -10,7 +10,7 @@ import com.dev.daemon.ServiceManager
 import com.dev.daemon.helper.DaemonHelper
 import java.util.*
 
-abstract class HeartBeatService : Service() {
+abstract class BaseHeartBeatService : Service() {
     private val timer = Timer()
 
     private val timerTask = object : TimerTask() {
