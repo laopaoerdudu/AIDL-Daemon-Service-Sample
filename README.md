@@ -29,3 +29,5 @@ Android 5.0 以上可以使用 `JobService` 来做定时任务，定时检测本
 
 动态广播监听：网络变化、开屏、锁屏、解锁、点击 `Home` 键  
 静态广播监听：开机、连接电源、断开电源、安装应用、卸载应用
+
+[Android正确的保活方案](https://mp.weixin.qq.com/s/9gjVsLqi0_sqSfwH-txNQA)
